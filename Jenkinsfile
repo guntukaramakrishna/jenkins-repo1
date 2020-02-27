@@ -1,11 +1,27 @@
 def who_is_upstream(job) {
-    def run = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)?.getUpstreamRun()
-    println "who_is_upstream ==>"+run
-    if (run == null) {
+    def upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
+    
+    println "upstreamcause ==>"+upstreamcause
+    if (upstreamcause != null) {
+        upstreamJob = Jenkins.getInstance().getItemByFullName(upstreamcause.getUpstreamProject(), hudson.model.Job.class)
+        println "this is the upstream"+upstreamJob
+        if (upstreamJob != null) {
+            upstream = upstreamJob.getBuildByNumber(upstreamcause.getUpstreamBuild())
+            if (upstream != null) {
+                println "this is the upstream"+upstream
+                return upstream
+            }
+            println "there is no upstream sorry it is null"
+            return null
+        }
+        println "there is no upstreamJob sorry it is null"
         return null
     }
-    return run
+    if (upstreamcause == null) {
+        return null
+    }
 }
+
 def recursive_upstream(job) {
     def upstream = who_is_upstream(job)
     if(upstream != null)
