@@ -1,3 +1,15 @@
+def who_caused(build) {
+    def buildUser = build.rawBuild.getCause(hudson.model.Cause$UserIdCause)
+    if (!buildUser) {
+        return null 
+    }
+    [
+        id: buildUser.getUserId(),
+        name: buildUser.getUserName(),
+        description: buildUser.getShortDescription()
+    ]   
+}
+
 def who_is_upstream(job) {
     def upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
     
@@ -52,8 +64,9 @@ pipeline {
                 script {
                     echo 'Getting upstream'
                     println "current build "+currentBuild
-                    def upstreamJob = recursive_upstream(currentBuild)
-                    println "upsteam Job ="+upstreamJob
+                    //def upstreamJob = recursive_upstream(currentBuild)
+                    def who_caused_this = who_caused(currentBuild)
+                    println "who_caused_this Job failure ="+who_caused_this
                 }
             }
         }
