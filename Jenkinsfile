@@ -18,7 +18,7 @@ def getBuildCause(job) {
     }
     
     //Check if the build was triggered by some jenkins project(job)
-    upstreamcause = upStreamBuild.getCause(hudson.model.Cause.UpstreamCause.class)
+    upstreamcause = job.rawBuild.getCause(hudson.model.Cause.UpstreamCause.class)
     if (upstreamcause != null) {
        return "UpstreamCause"
     }
