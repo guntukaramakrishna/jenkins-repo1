@@ -93,11 +93,13 @@ pipeline {
                         println "upstreamBuild is == "+ upstreamBuild
                         def changeSet = upstreamBuild.getChangeSets()
                         println "changeSet is == "+ changeSet
-                        def logSet = changeSet.get(0)
-                        println "logSet is == "+ logSet
-                        def changeLog = logSet.getLogs()
-                        println "changeLog is == "+ changeLog
-                        println "Author Email == "+ changeLog.getAuthorEmail()
+                        if (changeSet.size() > 0) {
+                            def logSet = changeSet.get(0)
+                            println "logSet is == "+ logSet
+                            def changeLog = logSet.getLogs()
+                            println "changeLog is == "+ changeLog.get(0)
+                            println "Author Email == "+ changeLog.get(0).getAuthorEmail()
+                        }
                     }
                 }
             }
