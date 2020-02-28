@@ -88,7 +88,7 @@ pipeline {
                     println "current build == "+currentBuild
                     def buildCause = getBuildCause(currentBuild)
                     println "the buildCause is == "+ buildCause
-                    if (buildCause == "UpstreamCause") {
+                    /*if (buildCause == "UpstreamCause") {
                         def upstreamBuild = currentBuild.getUpstreamBuilds().last()
                         println "upstreamBuild is == "+ upstreamBuild
                         def changeSet = upstreamBuild.getChangeSets()
@@ -96,7 +96,7 @@ pipeline {
                         def logSet = changeSet.getLogs()
                         println "logSet is == "+ logSet
                         //println "Author Email == "+ changeSet.getAuthorEmail()
-                    }
+                    }*/
                 }
             }
         }
