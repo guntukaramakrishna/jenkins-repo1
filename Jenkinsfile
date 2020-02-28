@@ -93,7 +93,7 @@ pipeline {
                         println "upstreamBuild is == "+ upstreamBuild
                         def changeSet = upstreamBuild.getChangeSets()
                         println "changeSet is == "+ changeSet
-                        def logSet = changeSet.getLogs()
+                        def logSet = changeSet.get(0)
                         println "logSet is == "+ logSet
                         //println "Author Email == "+ changeSet.getAuthorEmail()
                     }
