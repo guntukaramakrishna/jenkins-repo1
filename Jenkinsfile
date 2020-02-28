@@ -87,7 +87,7 @@ pipeline {
                     echo 'Getting upstream'
                     println "current build == "+currentBuild
                     def buildCause = getBuildCause(currentBuild)
-                    println "the buildCause is == "+ buildCuase
+                    println "the buildCause is == "+ buildCause
                     if (buildCause == "UpstreamCause") {
                         def upstreamBuild = currentBuild.getUpstreamBuilds().last()
                         println "upstreamBuild is == "+ upstreamBuild
