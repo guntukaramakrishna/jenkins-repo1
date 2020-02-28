@@ -65,8 +65,9 @@ pipeline {
                 script {
                     echo 'Getting upstream'
                     println "current build == "+currentBuild
-                    def upstreamJob = recursive_upstream(currentBuild)
-                    println "the upsteram Job == "+upstreamJob
+                    println "upstream builds for currentBuild == "+ currentBuild.getUpstreamBuilds()
+                    //def upstreamJob = recursive_upstream(currentBuild)
+                    //println "the upsteram Job == "+upstreamJob
                     //def who_caused_this = who_caused(currentBuild)
                     //println "who_caused_this Job failure ="+who_caused_this
                 }
