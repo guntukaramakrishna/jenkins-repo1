@@ -18,7 +18,7 @@ def getBuildCause(job) {
     }
     
     //Check if the build was triggered by some jenkins project(job)
-    upstreamcause = job.rawBuild.getCause(hudson.model.Cause.UpstreamCause.class)
+    upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
     if (upstreamcause != null) {
        return "UpstreamCause"
     }
@@ -87,10 +87,13 @@ pipeline {
                     echo 'Getting upstream'
                     println "current build == "+currentBuild
                     def buildCause = getBuildCause(currentBuild)
+                    println "the buildCause is == "+ buildCuase
                     if (buildCause == "UpstreamCause") {
                         def upstreamBuild = currentBuild.getUpstreamBuilds().last()
+                        println "upstreamBuild is == "+ upstreamBuild
                         def changeSet = upstreamBuild.getChangeSets().first()
-                        println "Author Email == "+changeSet.getAuthorEmail()
+                        println "changeSet is == "+ changeSet
+                        println "Author Email == "+ changeSet.getAuthorEmail()
                     }
                 }
             }
