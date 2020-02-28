@@ -95,7 +95,9 @@ pipeline {
                         println "changeSet is == "+ changeSet
                         def logSet = changeSet.get(0)
                         println "logSet is == "+ logSet
-                        //println "Author Email == "+ changeSet.getAuthorEmail()
+                        def changeLog = logSet.getLogs()
+                        println "changeLog is == "+ changeLog
+                        println "Author Email == "+ changeLog.getAuthorEmail()
                     }
                 }
             }
