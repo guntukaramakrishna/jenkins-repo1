@@ -71,8 +71,8 @@ pipeline {
                        println "upstreamBuild getDisplayName() == "+ upstreamBuild.getDisplayName()
                        println "upstreamBuild changeset == "+ upstreamBuild.getChangeSets()
                     }
-                    println "last upstream build -- "+ upstreamBuild.getUpstreamBuilds().last()
-                    println "who caused this -- "+ who_caused(upstreamBuild.getUpstreamBuilds().last())
+                    println "last upstream build -- "+ currentBuild.getUpstreamBuilds().last()
+                    println "who caused this -- "+ who_caused(currentBuild.getUpstreamBuilds().last())
                     //def upstreamJob = recursive_upstream(currentBuild)
                     //println "the upsteram Job == "+upstreamJob
                     //def who_caused_this = who_caused(currentBuild)
