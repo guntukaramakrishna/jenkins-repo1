@@ -66,6 +66,11 @@ pipeline {
                     echo 'Getting upstream'
                     println "current build == "+currentBuild
                     println "upstream builds for currentBuild == "+ currentBuild.getUpstreamBuilds()
+                    for(upstreamBuild in currentBuild.getUpstreamBuilds()){
+                       println "upstreamBuild URL == "+ upstreamBuild.getAbsoluteUrl()
+                       println "upstreamBuild getDisplayName() == +"upstreamBuild.getDisplayName()
+                       println "upstreamBuild changeset == "+ upstreamBuild.getChangeSets()
+                    }
                     //def upstreamJob = recursive_upstream(currentBuild)
                     //println "the upsteram Job == "+upstreamJob
                     //def who_caused_this = who_caused(currentBuild)
