@@ -10,6 +10,27 @@ def who_caused(build) {
     ]   
 }
 
+def getBuildCause(job) {
+    //Check if the build was triggered by some jenkins user
+    usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
+    if (usercause != null) {
+        return "UserIdCause"
+    }
+    
+    //Check if the build was triggered by some jenkins project(job)
+    upstreamcause = upStreamBuild.getCause(hudson.model.Cause.UpstreamCause.class)
+    if (upstreamcause != null) {
+       return "UpstreamCause"
+    }
+    
+    branchEventCause = job.rawBuild.getCause(jenkins.branch.BranchEventCause.class)
+    if (branchEventCause != null) {
+       return "BranchEventCause"
+    }
+    return "";
+       
+}
+
 def who_is_upstream(job) {
     def upstreamcause = job.rawBuild.getCause(hudson.model.Cause.UpstreamCause.class)
     
@@ -65,18 +86,12 @@ pipeline {
                 script {
                     echo 'Getting upstream'
                     println "current build == "+currentBuild
-                    println "upstream builds for currentBuild == "+ currentBuild.getUpstreamBuilds()
-                    for(upstreamBuild in currentBuild.getUpstreamBuilds()){
-                       println "upstreamBuild URL == "+ upstreamBuild.getAbsoluteUrl()
-                       println "upstreamBuild getDisplayName() == "+ upstreamBuild.getDisplayName()
-                       println "upstreamBuild changeset == "+ upstreamBuild.getChangeSets()
+                    def buildCause = getBuildCause(currentBuild)
+                    if (buildCause == "UpstreamCause") {
+                        def upstreamBuild = currentBuild.getUpstreamBuilds().last()
+                        def changeSet = upstreamBuild.getChangeSets().first()
+                        println "Author Email == "+changeSet.getAuthorEmail()
                     }
-                    println "last upstream build -- "+ currentBuild.getUpstreamBuilds().last()
-                    println "who caused this -- "+ who_caused(currentBuild.getUpstreamBuilds().last())
-                    //def upstreamJob = recursive_upstream(currentBuild)
-                    //println "the upsteram Job == "+upstreamJob
-                    //def who_caused_this = who_caused(currentBuild)
-                    //println "who_caused_this Job failure ="+who_caused_this
                 }
             }
         }
