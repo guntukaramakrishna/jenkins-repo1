@@ -18,11 +18,12 @@ def who_is_upstream(job) {
         upstreamJob = Jenkins.getInstance().getItemByFullName(upstreamcause.getUpstreamProject(), hudson.model.Job.class)
         println "this is the upstream Job "+ upstreamJob
         if (upstreamJob != null) {
-            //upstream = upstreamJob.getBuildByNumber(upstreamcause.getUpstreamBuild())
-            /*if (upstream != null) {
-                println "this is the upstream"+upstream
+            println "upstreamcause.getUpstreamBuild()== "+ upstreamcause.getUpstreamBuild()
+            upstream = upstreamJob.getBuildByNumber(upstreamcause.getUpstreamBuild())
+            if (upstream != null) {
+                println "this is the upstream now == "+ upstream
                 return upstream
-            }*/
+            }
             //println "there is no upstream sorry it is null"
             return upstreamJob
         }
