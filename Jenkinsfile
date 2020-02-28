@@ -11,12 +11,12 @@ def who_caused(build) {
 }
 
 def who_is_upstream(job) {
-    def upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
+    def upstreamcause = job.rawBuild.getCause(hudson.model.Cause.UpstreamCause.class)
     
-    println "upstreamcause ==> "+upstreamcause
+    println "upstreamcause ==> "+ upstreamcause
     if (upstreamcause != null) {
         upstreamJob = Jenkins.getInstance().getItemByFullName(upstreamcause.getUpstreamProject(), hudson.model.Job.class)
-        println "this is the upstream Job "+upstreamJob
+        println "this is the upstream Job "+ upstreamJob
         if (upstreamJob != null) {
             //upstream = upstreamJob.getBuildByNumber(upstreamcause.getUpstreamBuild())
             /*if (upstream != null) {
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 script {
                     echo 'Getting upstream'
-                    println "current build "+currentBuild
+                    println "current build == "+currentBuild
                     def upstreamJob = recursive_upstream(currentBuild)
                     println "the upsteram Job == "+upstreamJob
                     //def who_caused_this = who_caused(currentBuild)
