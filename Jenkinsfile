@@ -68,7 +68,7 @@ pipeline {
                     println "upstream builds for currentBuild == "+ currentBuild.getUpstreamBuilds()
                     for(upstreamBuild in currentBuild.getUpstreamBuilds()){
                        println "upstreamBuild URL == "+ upstreamBuild.getAbsoluteUrl()
-                       println "upstreamBuild getDisplayName() == +"upstreamBuild.getDisplayName()
+                       println "upstreamBuild getDisplayName() == "+ upstreamBuild.getDisplayName()
                        println "upstreamBuild changeset == "+ upstreamBuild.getChangeSets()
                     }
                     //def upstreamJob = recursive_upstream(currentBuild)
