@@ -10,21 +10,21 @@ def who_caused(build) {
     ]   
 }
 
-@NonCPS
+
 def getBuildCause(job) {
     //Check if the build was triggered by some jenkins user
-    usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
+    def usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
     if (usercause != null) {
         return "UserIdCause"
     }
     
     //Check if the build was triggered by some jenkins project(job)
-    upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
+    def upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
     if (upstreamcause != null) {
        return "UpstreamCause"
     }
     
-    branchEventCause = job.rawBuild.getCause(jenkins.branch.BranchEventCause.class)
+    def branchEventCause = job.rawBuild.getCause(jenkins.branch.BranchEventCause.class)
     if (branchEventCause != null) {
        return "BranchEventCause"
     }
@@ -89,7 +89,7 @@ pipeline {
                     println "current build == "+currentBuild
                     def buildCause = getBuildCause(currentBuild)
                     println "the buildCause is == "+ buildCause
-                    if (buildCause == "UpstreamCause") {
+                    /*if (buildCause == "UpstreamCause") {
                         def upstreamBuild = currentBuild.getUpstreamBuilds().last()
                         println "upstreamBuild is == "+ upstreamBuild
                         def changeSet = upstreamBuild.getChangeSets()
@@ -100,6 +100,23 @@ pipeline {
                             def changeLog = logSet.getLogs()
                             println "changeLog is == "+ changeLog.get(0)
                             println "Author Email == "+ changeLog.get(0).getAuthorEmail()
+                        }
+                    }*/
+                    if (buildCause == "UpstreamCause") {
+                        def upstreamBuild = currentBuild.getUpstreamBuilds().last()
+                        def changeLogSets = upstreamBuild.getChangeSets()
+                        println "changeSet is == "+ changeSet
+                        for (int i = 0; i < changeLogSets.size(); i++) {
+                            def entries = changeLogSets[i].items
+                            for (int j = 0; j < entries.length; j++) {
+                                def entry = entries[j]
+                                echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+                                def files = new ArrayList(entry.affectedFiles)
+                                for (int k = 0; k < files.size(); k++) {
+                                    def file = files[k]
+                                    echo "  ${file.editType.name} ${file.path}"
+                                }
+                            }
                         }
                     }
                 }
