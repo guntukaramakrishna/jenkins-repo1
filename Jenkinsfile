@@ -12,18 +12,18 @@ def who_caused(build) {
 
 def getBuildCause(job) {
     //Check if the build was triggered by some jenkins user
-    def usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
+    usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
     if (usercause != null) {
         return "UserIdCause"
     }
     
     //Check if the build was triggered by some jenkins project(job)
-    def upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
+    upstreamcause = job.rawBuild.getCause(hudson.model.Cause$UpstreamCause)
     if (upstreamcause != null) {
        return "UpstreamCause"
     }
     
-    def branchEventCause = job.rawBuild.getCause(jenkins.branch.BranchEventCause.class)
+    branchEventCause = job.rawBuild.getCause(jenkins.branch.BranchEventCause.class)
     if (branchEventCause != null) {
        return "BranchEventCause"
     }
