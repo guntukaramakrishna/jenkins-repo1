@@ -105,7 +105,7 @@ pipeline {
                     if (buildCause == "UpstreamCause") {
                         def upstreamBuild = currentBuild.getUpstreamBuilds().last()
                         def changeLogSets = upstreamBuild.getChangeSets()
-                        println "changeSet is == "+ changeSet
+                        println "changeSet is == "+ changeLogSets
                         for (int i = 0; i < changeLogSets.size(); i++) {
                             def entries = changeLogSets[i].items
                             for (int j = 0; j < entries.length; j++) {
