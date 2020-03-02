@@ -10,6 +10,7 @@ def who_caused(build) {
     ]   
 }
 
+@NonCPS
 def getBuildCause(job) {
     //Check if the build was triggered by some jenkins user
     usercause = job.rawBuild.getCause(hudson.model.Cause.UserIdCause.class)
